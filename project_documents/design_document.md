@@ -1,4 +1,4 @@
-# [standing_cat team] Design Document
+# Design Document
 
 ## Ticket System Design
 
