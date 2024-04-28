@@ -1,0 +1,73 @@
+@startuml
+
+actor "Client" as client
+participant "API Gateway/Lambda" as apiGateway
+participant "createTicketActivity" as createTicketActivity
+participant "UserDao" as userDao
+participant "TicketDao" as ticketDao
+database "DynamoDB" as dynamoDB
+
+title Create Ticket
+
+client -> apiGateway : HTTP Request
+activate apiGateway
+
+apiGateway -> createTicketActivity : CreateTicketRequest
+activate createTicketActivity
+
+alt if shortDescription is empty
+createTicketActivity -> apiGateway : throw invalidShortDescriptionException
+apiGateway -> client : return 400 response
+else else continue
+end
+
+alt if longDescription is empty
+createTicketActivity -> apiGateway : throw invalidLongDescriptionException
+apiGateway -> client : return 400 response
+else else continue
+end
+
+createTicketActivity -> userDao : getUser(userId)
+activate userDao
+
+userDao -> dynamoDB : lookup by userId
+activate dynamoDB
+
+alt if user does not exist
+dynamoDB --> userDao : return with no item data
+userDao --> createTicketActivity: throw UserNotFoundException
+createTicketActivity --> apiGateway: propagate PlaylistNotFoundException
+apiGateway --> client: return 400 response
+else else continue
+end
+
+dynamoDB --> userDao: return User data
+deactivate dynamoDB
+
+userDao --> createTicketActivity : return User object
+deactivate userDao
+
+createTicketActivity -> createTicketActivity: generate unique ticketId
+createTicketActivity -> createTicketActivity: generate String creationDate
+
+createTicketActivity -> ticketDao : saveTicket(ticket)
+activate ticketDao
+
+ticketDao -> dynamoDB : save ticket
+activate dynamoDB
+
+dynamoDB --> ticketDao: return ticket data
+deactivate dynamoDB
+
+ticketDao -> createTicketActivity : return Ticket object
+deactivate ticketDao
+
+createTicketActivity -> createTicketActivity: Create CreateTicketResult
+
+createTicketActivity --> apiGateway : return CreateTicketResult
+deactivate createTicketActivity
+
+apiGateway --> client : return 200 response with CreateTicketResult data
+deactivate apiGateway
+
+@enduml

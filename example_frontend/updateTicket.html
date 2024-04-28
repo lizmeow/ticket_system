@@ -1,0 +1,48 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport content="width=device-width, initial-scale="1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="updateTicket.js" defer></script>
+    <title>Ticket System</title>
+</head>
+<body>
+
+<form class="ui form" id="contact-form-update-ticket">
+    <div class="field">
+        <label>Ticket Id</label>
+        <input
+                id="ticketId"
+                type="text"
+                name="ticketId"
+                placeholder="Ticket Id" />
+    </div>
+    <div class="field">
+        <label>State</label>
+        <input
+                id="state"
+                type="text"
+                name="state"
+                placeholder="State" />
+    </div>
+    <div class="field">
+        <label>Resolution Text</label>
+        <input
+                id="resolutionText"
+                type="text"
+                name="resolutionText"
+                placeholder="Resolution Description" />
+    </div>
+    <div class="field">
+        <label>Resolved By User Id</label>
+        <input
+                id="resolvedByUserId"
+                type="text"
+                name="resolvedByUserID"
+                placeholder="Resolved By User Id" />
+    </div>
+    <button class="ui button blue">Update Ticket</button>
+    <p><a href="./index.html">Home</a></p>
+</form>
+</body>
+</html>

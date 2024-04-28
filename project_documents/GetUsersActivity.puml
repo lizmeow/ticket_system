@@ -1,0 +1,43 @@
+@startuml
+
+actor "Client" as client
+participant "API Gateway/Lambda" as apiGateway
+participant "GetUsersActivity" as getUsersActivity
+participant "UserDao" as userDao
+database "DynamoDB" as dynamoDB
+
+title Get Users
+
+client -> apiGateway : HTTP Request
+activate apiGateway
+
+apiGateway -> getUsersActivity : GetUsersRequest
+activate getUsersActivity
+
+getUsersActivity -> userDao : getAllUsers()
+activate userDao
+
+userDao -> dynamoDB : use scan operation
+activate dynamoDB
+
+dynamoDB --> userDao: get all users
+deactivate dynamoDB
+
+userDao --> getUsersActivity : return List<User>
+deactivate userDao
+
+loop for each user in user list
+getUsersActivity -> getUsersActivity: Create UserModel
+getUsersActivity -> getUsersActivity: SetUserModel fields with User data
+getUsersActivity -> getUsersActivity: store UserModel in list
+end
+
+getUsersActivity -> getUsersActivity: Create GetUsersResult and set SongModel List
+
+getUsersActivity --> apiGateway : return GetUsersResult
+deactivate getUsersActivity
+
+apiGateway --> client : return 200 response with GetUsersResult data
+deactivate apiGateway
+
+@enduml

@@ -1,0 +1,65 @@
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport content="width=device-width, initial-scale="1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="index.js" defer></script>
+    <title>Ticket System</title>
+  </head>
+  <body>
+  <a href="./updateTicket.html">Update Ticket</a>
+  <div class="ui celled list" id="update"> </div>
+
+  <a href="./createTicket.html">Create Ticket</a>
+  <div class="ui celled list" id="create"> </div>
+
+  <form class="ui form" id="contact-form-assigned-to-user-id">
+      <div class="field">
+          <label>Look up All Tickets Assigned to a User Id</label>
+          <input
+                  id="assignedToUserId"
+                  type="text"
+                  name="userId"
+                  placeholder="User Id" />
+      </div>
+      <button class="ui button blue">Look Up</button>
+  </form>
+  <form class="ui form" id="contact-form-created-by-user-id">
+      <div class="field">
+          <label>Look up All Tickets Created by a User Id</label>
+          <input
+                  id="createdByUserId"
+                  type="text"
+                  name="userId"
+                  placeholder="User Id" />
+      </div>
+      <button class="ui button blue">Look Up</button>
+  </form>
+  <form class="ui form" id="contact-form-ticket-id">
+      <div class="field">
+          <label>Look up Ticket by Ticket Id</label>
+          <input
+                  id="ticketId"
+                  type="text"
+                  name="ticketId"
+                  placeholder="Ticket Id" />
+      </div>
+      <button class="ui button blue">Look Up</button>
+  </form>
+
+    <a href="./users.html">List Users</a>
+    <div class="ui celled list" id="users"> </div>
+    <!--
+    <h2>Create a Playlist</h2>
+    <form class="card-content" id="create-playlist-form">
+      <label>Playlist Name
+        <input type="text" required class="validated-field" id="playlist-name" placeholder="smooth-jamz" autofocus>
+      </label>
+      <label>Tags
+        <input type="text" id="tags" class="tags" placeholder="tag1,tag2" data-tip="Must be a comma separated list of tags.">
+      </label>
+      <input type="submit" id="create" value="Create">
+    </form>
+    -->
+  </body>
+</html>
